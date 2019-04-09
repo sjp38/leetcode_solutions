@@ -1,14 +1,25 @@
 int idx_min(int *nums, int numsSize) {
-	int i;
-	int ret = -1;
+	int start, end, mid, v, prev;
 
-	ret = 0;
-	for (i = 1; i < numsSize; i++) {
-		if (nums[i] < nums[ret])
-			ret = i;
+	start = 0;
+	end = numsSize - 1;
+	while (start <= end) {
+		mid = (start + end) / 2;
+
+		if (mid == 0)
+			prev = numsSize - 1;
+		else
+			prev = mid - 1;
+
+		if (nums[mid] < nums[prev])
+			return mid;
+
+		if (mid && nums[mid] < nums[0])
+			end = mid - 1;
+		else
+			start = mid + 1;
 	}
-
-	return ret;
+	return 0;
 }
 
 #define realidx(idx, start, len) (idx + start >= len ? idx + start - len : idx + start)
