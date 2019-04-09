@@ -4,7 +4,7 @@ int idx_min(int *nums, int numsSize) {
 
 	ret = 0;
 	for (i = 1; i < numsSize; i++) {
-		if (nums[i] < ret)
+		if (nums[i] < nums[ret])
 			ret = i;
 	}
 
