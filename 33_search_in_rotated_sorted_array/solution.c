@@ -24,7 +24,10 @@ int search(int* nums, int numsSize, int target) {
 		cursor = idx_m + i;
 		if (cursor >= numsSize)
 			cursor -= numsSize;
-		if (nums[cursor] == target)
+
+		if (nums[cursor] > target)
+			return -1;
+		else if (nums[cursor] == target)
 			return cursor;
 	}
 	return -1;
