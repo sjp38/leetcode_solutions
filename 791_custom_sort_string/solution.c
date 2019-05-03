@@ -1,9 +1,9 @@
 char *order_str;
 
-int orderof(char c) {
+static inline int orderof(char c) {
 	int i;
 
-	for (i = 0; i < strnlen(order_str, 26); i++) {
+	for (i = 0; i < 26 && order_str[i] != '\0'; i++) {
 		if (c == order_str[i])
 			return i;
 	}
