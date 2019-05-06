@@ -61,10 +61,6 @@ char * mostCommonWord(char * paragraph, char ** banned, int bannedSize){
 		break;
     }
 
-    for (i = 0; i < 1000 && words[i] != NULL; i++) {
-	    printf("%s %d\n", words[i], word_freqs[i]);
-    }
-
     ret = (char *)malloc(sizeof(char) * strlen(words[idx_answer]));
     strcpy(ret, words[idx_answer]);
     return ret;
