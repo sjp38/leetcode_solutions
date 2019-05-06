@@ -2,27 +2,6 @@
     (c != ' ' && c != '!' && c != '?' && c != '\'' && \
      c != ',' && c != ';' && c != '.' && c != '\0')
 
-/* case-insensitive strcmp */
-static int cistrcmp(char *l, char *r) {
-    int i;
-    char lc, rc;
-
-    if (strlen(l) != strlen(r))
-        return 1;
-    for (i = 0; i < strlen(l); i++) {
-        lc = l[i];
-        rc = r[i];
-
-        if (lc >= 'A' && lc <= 'Z')
-            lc = 'a' + lc - 'A';
-        if (rc >= 'A' && rc <= 'Z')
-            rc = 'a' + rc - 'A';
-        if (lc != rc)
-            return 1;
-    }
-    return 0;
-}
-
 char * mostCommonWord(char * paragraph, char ** banned, int bannedSize){
     char *words[1000] = {0,}; /* strlen(paragraph) <= 1000 */
     char parag[1000];
@@ -54,7 +33,7 @@ char * mostCommonWord(char * paragraph, char ** banned, int bannedSize){
             in_word = 0;
             parag[i] = '\0';
             for (j = 0; j < bannedSize; j++) {
-                if (!cistrcmp(word_start, banned[j])) {
+                if (!strcmp(word_start, banned[j])) {
                     is_ban_word = 1;
                     break;
                 }
@@ -70,7 +49,7 @@ char * mostCommonWord(char * paragraph, char ** banned, int bannedSize){
                     word_freqs[j] = 1;
                     break;
                 }
-                if (!cistrcmp(word_start, words[j])) {
+                if (!strcmp(word_start, words[j])) {
                     word_freqs[j]++;
                     break;
                 }
