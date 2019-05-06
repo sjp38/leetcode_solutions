@@ -3,14 +3,14 @@
      c != ',' && c != ';' && c != '.' && c != '\0')
 
 char * mostCommonWord(char * paragraph, char ** banned, int bannedSize){
-    char *words[1000] = {0,}; /* strlen(paragraph) <= 1000 */
     char parag[1000];
-    int word_freqs[1000] = {0,};
-    char in_word = 0;
-    char *word_start;
     char c;
-    int i, j, idx_answer = -1;
+    char *words[1000] = {0,}; /* strlen(paragraph) <= 1000 */
+    int word_freqs[1000] = {0,};
+    char *word;
+    char in_word = 0;
     char is_ban_word = 0;
+    int i, j, idx_answer = -1;
     char *ret;
     
     strcpy(parag, paragraph);
@@ -20,7 +20,7 @@ char * mostCommonWord(char * paragraph, char ** banned, int bannedSize){
         if (!in_word && !is_reg_chr(c))
             continue;
         if (!in_word && is_reg_chr(c)) {
-            word_start = &parag[i];
+            word = &parag[i];
             in_word = 1;
             parag[i] = tolower(parag[i]);
             continue;
@@ -33,7 +33,7 @@ char * mostCommonWord(char * paragraph, char ** banned, int bannedSize){
             in_word = 0;
             parag[i] = '\0';
             for (j = 0; j < bannedSize; j++) {
-                if (!strcmp(word_start, banned[j])) {
+                if (!strcmp(word, banned[j])) {
                     is_ban_word = 1;
                     break;
                 }
@@ -45,11 +45,11 @@ char * mostCommonWord(char * paragraph, char ** banned, int bannedSize){
  
             for (j = 0; j < 1000; j++) {
                 if (words[j] == NULL) {
-                    words[j] = word_start;
+                    words[j] = word;
                     word_freqs[j] = 1;
                     break;
                 }
-                if (!strcmp(word_start, words[j])) {
+                if (!strcmp(word, words[j])) {
                     word_freqs[j]++;
                     break;
                 }
