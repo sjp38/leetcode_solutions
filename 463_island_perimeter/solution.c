@@ -3,7 +3,7 @@ int nr_rows;
 int nr_cols;
 
 /* Returns 1 if the cell is water */
-char iswater(int row, int col) {
+static inline char iswater(int row, int col) {
     if (row < 0 || row >= nr_rows || col < 0 || col >= nr_cols)
         return 1;
     if (cells[row][col] == 0)
@@ -12,7 +12,7 @@ char iswater(int row, int col) {
 }
 
 /* Returns perimeter of given ground cell */
-int perimeterof(int row, int col) {
+static inline int perimeterof(int row, int col) {
     int ret = 0;
 
     /* check up, down, left and right */
