@@ -2,7 +2,7 @@ int **gboard;
 int nr_rows;
 int nr_cols;
 
-int count_lives(int row, int col) {
+static inline int count_lives(int row, int col) {
     int i, j;
     int ret = 0;
 
@@ -19,26 +19,17 @@ int count_lives(int row, int col) {
     return ret;
 }
 
-void update(int **updated, int row, int col) {
+static inline void update(int **updated, int row, int col) {
     int nr_lives, nr_deads;
     
     nr_lives = count_lives(row, col);
-    if (gboard[row][col]) {
-        if (nr_lives < 2) {
-            updated[row][col] = 0;
-            return;
-        }
-        if (nr_lives == 2 || nr_lives == 3) {
-            updated[row][col] = 1;
-            return;
-        }
-        updated[row][col] = 0;
-    } else {
-        if (nr_lives == 3)
-            updated[row][col] = 1;
-        else
-            updated[row][col] = 0;
+    updated[row][col] = 0;
+    if (gboard[row][col] && (nr_lives == 2 || nr_lives == 3)) {
+        updated[row][col] = 1;
+        return;
     }
+    if (gboard[row][col] == 0 && nr_lives == 3)
+        updated[row][col] = 1;
 }
 
 /* boardSize: nr_rows, boardColSize: nr_cols */
@@ -53,15 +44,15 @@ void gameOfLife(int** board, int boardSize, int* boardColSize){
     updated = (int **)malloc(sizeof(int *) * nr_rows);
     for (row = 0; row < nr_rows; row++)
         updated[row] = (int *)malloc(sizeof(int) * nr_cols);
+
     for (row = 0; row < nr_rows; row++) {
         for (col = 0; col < nr_cols; col++)
             update(updated, row, col);
     }
     
     for (row = 0; row < nr_rows; row++) {
-        for (col = 0; col < nr_cols; col++) {
+        for (col = 0; col < nr_cols; col++)
             board[row][col] = updated[row][col];
-        }
         free(updated[row]);
     }
     free(updated);
