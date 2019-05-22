@@ -14,9 +14,7 @@ void add_child(struct node *n, struct node *c) {
 bool cycle_exists(struct node *n) {
     int i;
     
-    //printf("visit %d\n", n->id);
     if (n->visited) {
-        //printf("visited!\n");
         n->visited = 0;
         return true;
     }
@@ -35,6 +33,7 @@ bool canFinish(int numCourses, int** prerequisites, int prerequisitesSize, int* 
     struct node *nodes, *n;
     int i;
     
+    /* initialize the nodes */
     nodes = (struct node *)malloc(sizeof(struct node) * numCourses);
     for (i = 0; i < numCourses; i++) {
         n = &nodes[i];
@@ -44,11 +43,12 @@ bool canFinish(int numCourses, int** prerequisites, int prerequisitesSize, int* 
         n->visited = 0;
     }
     
+    /* construct the graph */
     for (i = 0; i < prerequisitesSize; i++)
         add_child(&nodes[prerequisites[i][0]], &nodes[prerequisites[i][1]]);
     
+    /* if any cycle exists, we cannot finish whole courses */
     for (i = 0; i < numCourses; i++) {
-        //printf("check %d\n", i);
         if (cycle_exists(&nodes[i]))
             return false;
     }
