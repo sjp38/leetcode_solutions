@@ -5,6 +5,7 @@ int nr_edges;
 int nr_nodes;
 int **childs;
 int *nr_childs;
+int *cap_childs;
 int *visited;
 
 #define nr_childs_of(n) (nr_childs[n])
@@ -33,7 +34,10 @@ static inline bool cycle_exists2(int n) {
 
 void add_child(int n, int c) {
     nr_childs[n]++;
-    childs[n] = realloc(childs[n], sizeof(int) * nr_childs[n]);
+    if (cap_childs[n] < nr_childs[n]) {
+        cap_childs[n] = nr_childs[n] * 2;
+        childs[n] = realloc(childs[n], sizeof(int) * cap_childs[n]);
+    }
     childs[n][nr_childs[n] - 1] = c;
 }
 
@@ -43,6 +47,7 @@ void construct_graph(void) {
     int i;
     
     visited = (int *)calloc(nr_nodes, sizeof(int));
+    cap_childs = (int *)calloc(nr_nodes, sizeof(int));
     nr_childs = (int *)calloc(nr_nodes, sizeof(int));
     childs = (int **)calloc(nr_nodes, sizeof(int *));
     
