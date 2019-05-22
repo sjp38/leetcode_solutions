@@ -31,6 +31,12 @@ static inline bool cycle_exists2(int n) {
     return false;
 }
 
+void add_child(int n, int c) {
+    nr_childs[n]++;
+    childs[n] = realloc(childs[n], sizeof(int) * nr_childs[n]);
+    childs[n][nr_childs[n] - 1] = c;
+}
+
 /* initialize 'childs', 'nr_childs', and 'visited' */
 void construct_graph(void) {
     int n, c;
@@ -43,9 +49,7 @@ void construct_graph(void) {
     for (i = 0; i < nr_edges; i++) {
         n = edges[i][0];
         c = edges[i][1];
-        nr_childs[n]++;
-        childs[n] = realloc(childs[n], sizeof(int) * nr_childs[n]);
-        childs[n][nr_childs[n] - 1] = c;
+        add_child(n, c);
     }
 }
 
