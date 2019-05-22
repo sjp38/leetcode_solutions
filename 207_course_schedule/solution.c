@@ -1,55 +1,66 @@
-struct node {
-    int id;
-    struct node **childs;
-    int nr_childs;
-    int visited;
-};
+/* We could further clean up using struct graph */
+int **edges;
+int nr_edges;
 
-void add_child(struct node *n, struct node *c) {
-    n->nr_childs++;
-    n->childs = realloc(n->childs, sizeof(struct node *) * n->nr_childs);
-    n->childs[n->nr_childs - 1] = c;
-}
+int nr_nodes;
+int **childs;
+int *nr_childs;
+int *visited;
 
-bool cycle_exists(struct node *n) {
+#define nr_childs_of(n) (nr_childs[n])
+#define nth_child_of(node, n) (childs[node][n])
+#define is_visited(n) (visited[n] == 1)
+#define set_visited(n) do {visited[n] = 1;} while (0)
+#define clear_visited(n) do {visited[n] = 0;} while (0)
+
+static inline bool cycle_exists2(int n) {
     int i;
     
-    if (n->visited) {
-        n->visited = 0;
+    if (is_visited(n)) {
+        clear_visited(n);
         return true;
     }
-    n->visited = 1;
-    for (i = 0; i < n->nr_childs; i++) {
-        if (cycle_exists(n->childs[i])) {
-            n->visited = 0;
+    set_visited(n);
+    for (i = 0; i < nr_childs_of(n); i++) {
+        if (cycle_exists2(nth_child_of(n, i))) {
+            clear_visited(n);
             return true;
         }
     }
-    n->visited = 0;
+    clear_visited(n);
     return false;
 }
 
-bool canFinish(int numCourses, int** prerequisites, int prerequisitesSize, int* prerequisitesColSize){
-    struct node *nodes, *n;
+/* initialize 'childs', 'nr_childs', and 'visited' */
+void construct_graph(void) {
+    int n, c;
     int i;
     
-    /* initialize the nodes */
-    nodes = (struct node *)malloc(sizeof(struct node) * numCourses);
-    for (i = 0; i < numCourses; i++) {
-        n = &nodes[i];
-        n->id = i;
-        n->childs = NULL;
-        n->nr_childs = 0;
-        n->visited = 0;
-    }
+    visited = (int *)calloc(nr_nodes, sizeof(int));
+    nr_childs = (int *)calloc(nr_nodes, sizeof(int));
+    childs = (int **)calloc(nr_nodes, sizeof(int *));
     
-    /* construct the graph */
-    for (i = 0; i < prerequisitesSize; i++)
-        add_child(&nodes[prerequisites[i][0]], &nodes[prerequisites[i][1]]);
+    for (i = 0; i < nr_edges; i++) {
+        n = edges[i][0];
+        c = edges[i][1];
+        nr_childs[n]++;
+        childs[n] = realloc(childs[n], sizeof(int) * nr_childs[n]);
+        childs[n][nr_childs[n] - 1] = c;
+    }
+}
+
+bool canFinish(int numCourses, int** prerequisites, int prerequisitesSize, int* prerequisitesColSize){
+    int i;
+    
+    edges = prerequisites;
+    nr_edges = prerequisitesSize;
+    nr_nodes = numCourses;
+    
+    construct_graph();
     
     /* if any cycle exists, we cannot finish whole courses */
     for (i = 0; i < numCourses; i++) {
-        if (cycle_exists(&nodes[i]))
+        if (cycle_exists2(i))
             return false;
     }
     return true;
