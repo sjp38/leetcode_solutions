@@ -1,13 +1,11 @@
 int reverse(int x){
     long val = x;
-    long max = INT_MAX;
     long reversed = 0;
-    bool is_minus = false;
+    unsigned max = INT_MAX;
     
     if (x < 0) {
-        val = (long)x * -1;
-        is_minus = true;
-        max = (long)INT_MIN * -1;
+        val = val * -1;
+        max = 1U << 31;
     }
     while (val) {
         reversed = reversed * 10 + val % 10;
@@ -15,7 +13,7 @@ int reverse(int x){
             return 0;
         val = val / 10;
     }
-    if (is_minus)
+    if (x < 0)
         reversed *= -1;
     return reversed;
 }
