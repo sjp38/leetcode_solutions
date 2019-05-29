@@ -2,7 +2,7 @@
 bool isBadVersion(int version);
 
 int firstBadVersion(int n) {
-    long left, right;
+    unsigned left, right;
     int mid;
     
     for (left = 1, right = n; ;) {
