@@ -1,14 +1,15 @@
-int cmp(char *a, char *b) {
-    return *a - *b;
-}
-
 char findTheDifference(char * s, char * t){
+    int nr_letters_s[26] = {0,};
+    int nr_letters_t[26] = {0,};
+    char *c;
     int i;
-    qsort(s, strlen(s), sizeof(char), cmp);
-    qsort(t, strlen(t), sizeof(char), cmp);
-    for (i = 0; i < strlen(s); i++) {
-        if (s[i] != t[i])
-            return t[i];
+    for (c = s; *c; c++)
+        nr_letters_s[*c - 'a']++;
+    for (c = t; *c; c++)
+        nr_letters_t[*c - 'a']++;
+    for (i = 0; i < 26; i++) {
+        if (nr_letters_s[i] != nr_letters_t[i])
+            return 'a' + i;
     }
-    return t[strlen(t) - 1];
+    return NULL;
 }
