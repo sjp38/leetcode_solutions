@@ -31,10 +31,7 @@ int logcmp(void *l, void *r) {
  * Note: The returned array must be malloced, assume caller calls free().
  */
 char ** reorderLogFiles(char ** logs, int logsSize, int* returnSize){
-    char **sorted;
-    sorted = (char **)malloc(sizeof(char *) * logsSize);
-    memcpy(sorted, logs, sizeof(char *) * logsSize);
-    qsort(sorted, logsSize, sizeof(char *), logcmp);
+    qsort(logs, logsSize, sizeof(char *), logcmp);
     *returnSize = logsSize;
-    return sorted;
+    return logs;
 }
