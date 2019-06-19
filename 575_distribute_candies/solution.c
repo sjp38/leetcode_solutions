@@ -3,18 +3,13 @@ int intcmp(void *l, void *r) {
 }
 
 int distributeCandies(int* candies, int candiesSize){
-    int nr_kinds = 0, last_kind;
+    bool exists[200001] = {false,};
+    int nr_kinds = 0;
     int i;
-    qsort(candies, candiesSize, sizeof(int), intcmp);
     for (i = 0; i < candiesSize && nr_kinds < candiesSize / 2; i++) {
-        if (nr_kinds == 0) {
+        if (!exists[candies[i] + 100000]) {
+            exists[candies[i] + 100000] = true;
             nr_kinds++;
-            last_kind = candies[i];
-            continue;
-        }
-        if (candies[i] != last_kind) {
-            nr_kinds++;
-            last_kind = candies[i];
         }
     }
     return nr_kinds;
