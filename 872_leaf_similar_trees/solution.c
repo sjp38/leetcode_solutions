@@ -7,30 +7,49 @@
  * };
  */
 
-int *leafs(struct TreeNode *root, int *leaves, int *nr_leaves) {
-    if (root == NULL)
-        return leaves;
-    if (!root->left && !root->right) {
-        leaves = (int *)realloc(leaves, sizeof(int) * (*nr_leaves + 1));
-        leaves[*nr_leaves] = root->val;
-        *nr_leaves += 1;
-        return leaves;
+struct dibuf {
+    int *buf;
+    int cap;
+    int sz;
+};
+
+void dibuf_insert(struct dibuf *b, int v) {
+    if (b->cap == b->sz) {
+        b->cap *= 2;
+        b->buf = (int *)realloc(b->buf, sizeof(int) * b->cap);
     }
-    leaves = leafs(root->left, leaves, nr_leaves);
-    leaves = leafs(root->right, leaves, nr_leaves);
-    return leaves;
+    b->buf[b->sz++] = v;
 }
 
-bool leafSimilar(struct TreeNode* root1, struct TreeNode* root2){
-    int *l_leaves = NULL, *r_leaves = NULL;
-    int nr_l = 0, nr_r = 0;
+void dibuf_init(struct dibuf *b, int cap) {
+    b->buf = (int *)malloc(sizeof(int) * cap);
+    b->cap = cap;
+    b->sz = 0;
+}
+
+void leafs(struct TreeNode *root, struct dibuf *buf) {
+    if (root == NULL)
+        return;
+    if (!root->left && !root->right) {
+        dibuf_insert(buf, root->val);
+        return;
+    }
+    leafs(root->left, buf);
+    leafs(root->right, buf);
+}
+
+bool leafSimilar(struct TreeNode* root1, struct TreeNode* root2) {
+    struct dibuf l, r;
     int i;
-    l_leaves = leafs(root1, NULL, &nr_l);
-    r_leaves = leafs(root2, NULL, &nr_r);
-    if (nr_l != nr_r)
+
+    dibuf_init(&l, 4);
+    dibuf_init(&r, 4);
+    leafs(root1, &l);
+    leafs(root2, &r);
+    if (l.sz != r.sz)
         return false;
-    for (i = 0; i < nr_l; i++) {
-        if (l_leaves[i] != r_leaves[i])
+    for (i = 0; i < l.sz; i++) {
+        if (l.buf[i] != r.buf[i])
             return false;
     }
     return true;
