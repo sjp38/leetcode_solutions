@@ -38,19 +38,26 @@ void leafs(struct TreeNode *root, struct dibuf *buf) {
     leafs(root->right, buf);
 }
 
-bool leafSimilar(struct TreeNode* root1, struct TreeNode* root2) {
-    struct dibuf l, r;
-    int i;
-
-    dibuf_init(&l, 4);
-    dibuf_init(&r, 4);
-    leafs(root1, &l);
-    leafs(root2, &r);
-    if (l.sz != r.sz)
-        return false;
-    for (i = 0; i < l.sz; i++) {
-        if (l.buf[i] != r.buf[i])
+int idx_leaf = 0;
+bool cmp_leafs(struct TreeNode *root, struct dibuf *leafs) {
+    if (!root->left && !root->right) {
+        if (idx_leaf >= leafs->sz)
             return false;
+        if (root->val != leafs->buf[idx_leaf])
+            return false;
+        idx_leaf++;
     }
+    if (root->left && !cmp_leafs(root->left, leafs))
+        return false;
+    if (root->right && !cmp_leafs(root->right, leafs))
+        return false;
     return true;
+}
+
+bool leafSimilar(struct TreeNode* root1, struct TreeNode* root2) {
+    struct dibuf l;
+    idx_leaf = 0;
+    dibuf_init(&l, 4);
+    leafs(root1, &l);
+    return cmp_leafs(root2, &l);
 }
