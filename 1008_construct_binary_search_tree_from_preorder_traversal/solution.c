@@ -9,19 +9,18 @@
 
 struct TreeNode *insert(struct TreeNode *root, struct TreeNode *node)
 {
-    struct TreeNode *cursor, *last_cursor;
+    struct TreeNode *cursor, **candidate;
     
     if (root == NULL)
         return node;
     cursor = root;
-    last_cursor = cursor;
     while (cursor != NULL) {
         if (cursor->val > node->val) {
-            last_cursor = cursor;
+            candidate = &cursor->left;
             cursor = cursor->left;
         }
         else if (cursor->val < node->val) {
-            last_cursor = cursor;
+            candidate = &cursor->right;
             cursor = cursor->right;
         }
         else {
@@ -29,10 +28,7 @@ struct TreeNode *insert(struct TreeNode *root, struct TreeNode *node)
             return NULL;
         }
     }
-    if (last_cursor->val > node->val)
-        last_cursor->left = node;
-    if (last_cursor->val < node->val)
-        last_cursor->right = node;
+    *candidate = node;
     return root;
 }
 
