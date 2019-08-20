@@ -23,10 +23,7 @@ struct TreeNode *insert(struct TreeNode *root, struct TreeNode *node)
             candidate = &cursor->right;
             cursor = cursor->right;
         }
-        else {
-            printf("SOMETHING WRONG\n");
-            return NULL;
-        }
+        /* the values are distinct */
     }
     *candidate = node;
     return root;
