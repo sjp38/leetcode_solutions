@@ -21,7 +21,7 @@ int myLinkedListGet(MyLinkedList* obj, int index) {
     struct node *n;
     if (index < 0)
         return -1;
-    for (n = obj->head; index > 0 && n != NULL ; index--, n = n->next)
+    for (n = obj->head; index > 0 && n; index--, n = n->next)
         ;
     if (index > 0 || n == NULL)
         return -1;
@@ -47,26 +47,30 @@ void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
 
 /** Append a node of value val to the last element of the linked list. */
 void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
-    struct node **c;
-    for (c = &obj->head; *c != NULL; c = &(*c)->next)
+    struct node *n;
+    for (n = obj->head; n && n->next; n = n->next)
         ;
-    *c = new_node(val);
+    if (!n)
+        obj->head = new_node(val);
+    else
+        n->next = new_node(val);
 }
 
 /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
 void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
     struct node *p, *n, *new;
-    for (n = obj->head, p = n; n && index > 0; p = n, n = n->next, index--)
+    for (p = n = obj->head; n && index > 0;
+         p = n, n = n->next, index--)
         ;
     if (index > 0)
         return;
     /* n is index-th node, p is index-1-th node or n */
     new = new_node(val);
     new->next = n;
-    if (p != n)
-        p->next = new;
-    else
+    if (p == n) /* index was zero */
         obj->head = new;
+    else
+        p->next = new;
 }
 
 /** Delete the index-th node in the linked list, if the index is valid. */
@@ -79,11 +83,10 @@ void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
     if (index > 0 || n == NULL)
         return;
     /* n is index-th node, p is index-1-th node or n */
-    if (p == n) {
+    if (p == n) /* index was zero */
         obj->head = n->next;
-        return;
-    }
-    p->next = n->next;
+    else
+        p->next = n->next;
     free(n);
 }
 
