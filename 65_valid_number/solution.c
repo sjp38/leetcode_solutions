@@ -21,7 +21,6 @@ bool check_str(char *s, int idx_e)
 {
     int i, idx_dot = -1;
     char c;
-    //printf("'%s', %d\n", s, idx_e);
     if (idx_e == -1)
         idx_e = strlen(s);
     else if (idx_e == strlen(s) - 1)
@@ -36,7 +35,6 @@ bool check_str(char *s, int idx_e)
     
     for (i = 0; i < idx_e; i++) {
         c = s[i];
-        //printf("c: %c\n", c);
         if (c == '.' && idx_dot == -1) {
             idx_dot = i;
             if (idx_dot == 0 && idx_dot + 1 == idx_e)
