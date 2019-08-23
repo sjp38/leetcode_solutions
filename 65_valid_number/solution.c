@@ -1,4 +1,4 @@
-char *strip(char *s)
+static char *strip(char *s)
 {
     int i;
     char *ret;
@@ -17,7 +17,7 @@ char *strip(char *s)
     return ret;
 }
 
-bool check_str(char *s, int idx_e)
+static bool check_str(char *s, int idx_e)
 {
     int i, idx_dot = -1;
     char c;
