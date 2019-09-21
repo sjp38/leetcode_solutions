@@ -10,10 +10,6 @@ class Employee(object):
         # the id of direct subordinates
         self.subordinates = subordinates
 """
-def employee_of(employees, id):
-    for e in employees:
-        if e.id == id:
-            return e
 class Solution(object):
     def getImportance(self, employees, id):
         """
@@ -21,20 +17,21 @@ class Solution(object):
         :type id: int
         :rtype: int
         """
-        e = employee_of(employees, id)
+        emap = {}
+        for e in employees:
+            emap[e.id] = e
+        e = emap[id]
         if not e:
             return 0
         ret = e.importance
-        employees.remove(e)
         subords = e.subordinates
         while len(subords) > 0:
             next_subords = []
             for i in subords:
                 subords.remove(i)
-                e = employee_of(employees, i)
+                e = emap[i]
                 if not e:
                     continue
-                employees.remove(e)
                 ret += e.importance
                 next_subords += e.subordinates
             subords += next_subords
