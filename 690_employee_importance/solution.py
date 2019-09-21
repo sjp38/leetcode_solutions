@@ -34,6 +34,7 @@ class Solution(object):
                 e = employee_of(employees, i)
                 if not e:
                     continue
+                employees.remove(e)
                 ret += e.importance
                 next_subords += e.subordinates
             subords += next_subords
