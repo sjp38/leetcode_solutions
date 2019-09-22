@@ -17,6 +17,7 @@ char * findReplaceString(char * S, int* indexes, int indexesSize, char ** source
     
     todos = (int *)malloc(sizeof(int) * sourcesSize);
     nr_todos = 0;
+    sz_new_s = strlen(S);
     for (i = 0; i < sourcesSize; i++) {
         src = sources[i];
         idx = indexes[i];
@@ -29,19 +30,13 @@ char * findReplaceString(char * S, int* indexes, int indexesSize, char ** source
                 break;
             }
         }
-        if (matched)
+        if (matched) {
             todos[nr_todos++] = i;
+            sz_new_s += strlen(targets[i]) - strlen(sources[i]);
+        }
     }
     idxs = indexes;
     qsort(todos, nr_todos, sizeof(int), idxcmp);
-    
-    sz_new_s = strlen(S);
-    for (i = 0; i < nr_todos; i++) {
-        todo = todos[i];
-        target = targets[todo];
-        src = sources[todo];
-        sz_new_s += strlen(target) - strlen(src);
-    }
     
     ret = (char *)malloc(sizeof(char) * (sz_new_s + 1));
     rcursor = scursor = 0;
