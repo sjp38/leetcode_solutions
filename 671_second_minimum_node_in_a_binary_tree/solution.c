@@ -10,7 +10,7 @@
 int min;
 int second_min;
 
-void do_cmp(int val)
+static inline void do_cmp(int val)
 {
     if (val == min)
         return;
@@ -39,3 +39,5 @@ int findSecondMinimumValue(struct TreeNode* root){
     traverse(root);
     return second_min;
 }
+
+
