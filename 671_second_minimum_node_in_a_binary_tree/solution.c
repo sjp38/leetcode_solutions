@@ -14,11 +14,7 @@ static inline void do_cmp(int val)
 {
     if (val == min)
         return;
-    if (second_min == -1) {
-        second_min = val;
-        return;
-    }
-    if (val < second_min)
+    if (val < second_min || second_min == -1)
         second_min = val;
 }
 
