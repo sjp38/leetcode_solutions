@@ -18,6 +18,17 @@ unsigned long idx_enq;
 unsigned long idx_deq;
 unsigned long cap_queue;
 
+void shrink_queue(void)
+{
+    int nr_nodes;
+    struct qnode *new_q;
+    nr_nodes = idx_enq - idx_deq;
+    new_q = (struct qnode *)malloc(sizeof(struct qnode) * cap_queue);
+    memcpy(new_q, &queue[idx_deq], sizeof(struct qnode) * nr_nodes);
+    idx_enq -= idx_deq;
+    idx_deq = 0;
+    queue = new_q;
+}
 
 void enq(struct TreeNode *node, int lv, int pos)
 {
@@ -34,6 +45,8 @@ void enq(struct TreeNode *node, int lv, int pos)
 
 struct qnode deq(void)
 {
+    if (idx_deq > cap_queue / 2)
+        shrink_queue();
     return queue[idx_deq++];
 }
 
