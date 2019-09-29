@@ -1,12 +1,11 @@
 char * removeDuplicates(char * S){
     bool *removed;
     int len_S;
-    len_S = strlen(S);
-    removed = (bool *)calloc(len_S, sizeof(bool));
     int i, last_chr;
     bool found_dup;
     char *ret;
-    
+    len_S = strlen(S);
+    removed = (bool *)calloc(len_S, sizeof(bool));
     do {
         found_dup = false;
         last_chr = -1;
