@@ -16,7 +16,7 @@ bool is_selfdividing(int nr)
 int* selfDividingNumbers(int left, int right, int* returnSize){
     int *ret, nr_nrs;
     int i;
-    ret = (int *)malloc(sizeof(int) * right - left);
+    ret = (int *)malloc(sizeof(int) * (right - left));
     nr_nrs = 0;
     for (i = left; i <= right; i++) {
         if (is_selfdividing(i))
