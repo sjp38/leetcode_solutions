@@ -1,27 +1,26 @@
-int get_min_dist(int pos, int *seats, int nr_seats)
-{
-    int left_dist, right_dist, i;
-    
-    for (i = pos, left_dist = 0; i >= 0 && seats[i] == 0; i--, left_dist++)
-        ;
-    for (i = pos, right_dist = 0; i < nr_seats && seats[i] == 0; i++, right_dist++)
-        ;
-    if (pos == 0)
-        return right_dist;
-    if (pos == nr_seats - 1)
-        return left_dist;
-    return left_dist < right_dist ? left_dist : right_dist;
-}
-
 int maxDistToClosest(int* seats, int seatsSize){
-    int dist, max_dist = 0;
+    int dist = 0, max_dist = 0, lp = -1;
     int i;
     for (i = 0; i < seatsSize; i++) {
-        if (seats[i] == 1)
+        if (seats[i] == 0) {
+            dist++;
             continue;
-        dist = get_min_dist(i, seats, seatsSize);
-        if (dist > max_dist)
-            max_dist = dist;
+        } else {
+            if (dist > 0) {
+                if (lp != -1) {
+                    dist = (dist + 1) / 2;
+                }
+                if (dist > max_dist)
+                    max_dist = dist;
+                dist = 0;
+            }
+            lp = i;
+        }
+    }
+    if (lp == -1)
+        return dist;
+    if (seats[seatsSize - 1] == 0 && dist > max_dist) {
+        max_dist = dist;
     }
     return max_dist;
 }
