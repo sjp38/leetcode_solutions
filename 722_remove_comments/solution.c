@@ -12,21 +12,23 @@ char ** removeComments(char ** source, int sourceSize, int* returnSize){
         if (rline == NULL)
             rline = (char *)malloc(sizeof(char) * 81);
         for (j = 0; j < strlen(line); j++) {
-            if (!in_block_comment && strncmp(&line[j], "//", 2) == 0) {
-                break;
-            }
-            if (!in_block_comment && strncmp(&line[j], "/*", 2) == 0) {
-                in_block_comment = true;
-                j++;
+            if (!in_block_comment) {
+                if (strncmp(&line[j], "//", 2) == 0) {
+                    break;
+                }
+                if (strncmp(&line[j], "/*", 2) == 0) {
+                    in_block_comment = true;
+                    j++;
+                    continue;
+                }
+            } else {
+                if (strncmp(&line[j], "*/", 2) == 0) {
+                    in_block_comment = false;
+                    j++;
+                    continue;
+                }
                 continue;
             }
-            if (in_block_comment && strncmp(&line[j], "*/", 2) == 0) {
-                in_block_comment = false;
-                j++;
-                continue;
-            }
-            if (in_block_comment)
-                continue;
             rline[idx_rline++] = line[j];
         }
         if (idx_rline == 0)
