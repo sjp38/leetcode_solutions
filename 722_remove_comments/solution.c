@@ -3,10 +3,11 @@
  */
 char ** removeComments(char ** source, int sourceSize, int* returnSize){
     char *line, *rline = NULL, **rlines;
-    int idx_rline = 0, sz_rlines = 0;
+    int idx_rline = 0;
     bool in_block_comment = false;
     int i, j;
     rlines = (char **)malloc(sizeof(char *) * sourceSize);
+    *returnSize = 0;
     for (i = 0; i < sourceSize; i++) {
         line = source[i];
         if (rline == NULL)
@@ -39,9 +40,8 @@ char ** removeComments(char ** source, int sourceSize, int* returnSize){
         }
         rline[idx_rline] = '\0';
         idx_rline = 0;
-        rlines[sz_rlines++] = rline;
+        rlines[(*returnSize)++] = rline;
         rline = NULL;
     }
-    *returnSize = sz_rlines;
     return rlines;
 }
