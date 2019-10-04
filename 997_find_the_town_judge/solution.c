@@ -2,19 +2,19 @@ int findJudge(int N, int** trust, int trustSize, int* trustColSize){
     bool *has_trusts;
     bool *trusts_map;
     int *nr_trusts;
-    bool is_judge;
+    int truster, trustee;
     int i;
 
     has_trusts = (bool *)calloc(N, sizeof(bool));
     trusts_map = (bool *)calloc(N * N, sizeof(bool));
     nr_trusts = (int *)calloc(N, sizeof(int));
     for (i = 0; i < trustSize; i++) {
-        // has_trusts[i] is true if i trusts anyone
-        has_trusts[trust[i][0] - 1] = true;
-        // trusts_map[i][j] is true if i trusts j
-        if (!trusts_map[(trust[i][0] - 1) * N + trust[i][1] - 1]) {
-            nr_trusts[trust[i][1] - 1]++;
-            trusts_map[(trust[i][0] - 1) * N + trust[i][1] - 1] = true;
+        truster = trust[i][0] - 1;
+        trustee = trust[i][1] - 1;
+        has_trusts[truster] = true;
+        if (!trusts_map[truster * N + trustee]) {
+            nr_trusts[trustee]++;
+            trusts_map[truster * N + trustee] = true;
         }
     }
     for (i = 0; i < N; i++) {
