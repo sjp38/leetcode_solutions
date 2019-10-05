@@ -1,6 +1,6 @@
 int hIndex(int* citations, int citationsSize){
     int hidx = -1;
-    int gt, lt, eq, eq_in_h;
+    int gt, lt, eq;
     int i;
     for (i = 0; i < citationsSize; i++) {
         if (hidx < citations[i])
@@ -18,9 +18,7 @@ int hIndex(int* citations, int citationsSize){
             else
                 eq++;
         }
-        eq_in_h = gt + eq - hidx;
-        if (eq_in_h >= 0 &&
-            lt + eq_in_h == citationsSize - hidx)
+        if (gt + eq >= hidx)
             return hidx;
     }
     return 0;
