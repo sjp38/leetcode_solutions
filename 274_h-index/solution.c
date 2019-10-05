@@ -9,7 +9,8 @@ int hIndex(int* citations, int citationsSize){
     if (hidx > citationsSize)
         hidx = citationsSize;
     for (;hidx >= 0; hidx--) {
-        for (i = 0, gt = 0, lt = 0, eq = 0; i < citationsSize; i++) {
+        for (i = 0, gt = 0, lt = 0, eq = 0;
+             i < citationsSize; i++) {
             if (citations[i] > hidx)
                 gt++;
             else if (citations[i] < hidx)
@@ -17,12 +18,10 @@ int hIndex(int* citations, int citationsSize){
             else
                 eq++;
         }
-        if (gt + eq < hidx)
-            continue;
         eq_in_h = gt + eq - hidx;
-        if (lt + eq_in_h != citationsSize- hidx)
-            continue;
-        return hidx;
+        if (eq_in_h >= 0 &&
+            lt + eq_in_h == citationsSize - hidx)
+            return hidx;
     }
     return 0;
 }
