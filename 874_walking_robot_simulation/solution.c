@@ -1,7 +1,6 @@
 int robotSim(int* commands, int commandsSize, int** obstacles, int obstaclesSize, int* obstaclesColSize){
     int coord[2] = {0,};
     int next_coord[2];
-    int to_move[2];
     int direction = 0;  /* in clockwise.  0: north, 1: east, 2: south, 3: west */
     int cmd;
     int *obstacle;
@@ -17,20 +16,18 @@ int robotSim(int* commands, int commandsSize, int** obstacles, int obstaclesSize
             direction = (direction + 4 - 1) % 4;
             continue;
         }
-        
-        to_move[0] = to_move[1] = 0;
+        next_coord[0] = coord[0];
+        next_coord[1] = coord[1];
         if (direction == 0)
-            to_move[1] += cmd;
+            next_coord[1] = coord[1] + cmd;
         else if (direction == 1)
-            to_move[0] += cmd;
+            next_coord[0] = coord[0] + cmd;
         else if (direction == 2)
-            to_move[1] -= cmd;
+            next_coord[1] = coord[1] - cmd;
         else if (direction == 3)
-            to_move[0] -= cmd;
+            next_coord[0] = coord[0] - cmd;
         else
             printf("Wrong direction %d\n", direction);
-        next_coord[0] = coord[0] + to_move[0];
-        next_coord[1] = coord[1] + to_move[1];
         for (j = 0; j < obstaclesSize; j++) {
             obstacle = obstacles[j];
             if (coord[1] == obstacle[1] &&
