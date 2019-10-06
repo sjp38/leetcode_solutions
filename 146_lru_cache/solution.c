@@ -22,19 +22,27 @@ LRUCache* lRUCacheCreate(int capacity) {
     return cache;
 }
 
+static inline void list_remove(struct lru_object *obj)
+{
+    obj->next->prev = obj->prev;
+    obj->prev->next = obj->next;
+}
+    
+static inline void list_add(struct lru_object *obj, struct lru_object *prev, struct lru_object *next)
+{
+    obj->next = next;
+    obj->prev = prev;
+    next->prev = obj;
+    prev->next = obj;
+}
+
 int lRUCacheGet(LRUCache* obj, int key) {
     struct lru_object *o, *head;
     head = &obj->head;
     for (o = head->next; o != head; o = o->next) {
         if (o->key == key) {
-            /* delte o */
-            o->next->prev = o->prev;
-            o->prev->next = o->next;
-            /* insert o between head and head->next */
-            o->next = head->next;
-            o->prev = head;
-            head->next->prev = o;
-            head->next = o;
+            list_remove(o);
+            list_add(o, head, head->next);
             return o->val;
         }
     }
@@ -57,14 +65,8 @@ void lRUCachePut(LRUCache* obj, int key, int value) {
     for (o = head->next; o != head; o = o->next) {
         if (o->key == key) {
             o->val = value;
-            /* delte o */
-            o->next->prev = o->prev;
-            o->prev->next = o->next;
-            /* insert o between head and head->next */
-            o->next = head->next;
-            o->prev = head;
-            head->next->prev = o;
-            head->next = o;
+            list_remove(o);
+            list_add(o, head, head->next);
             return;
         }
     }
@@ -77,10 +79,7 @@ void lRUCachePut(LRUCache* obj, int key, int value) {
         victim->prev->next = victim->next;
         obj->nr_objs--;
     }
-    o->next = head->next;
-    o->prev = head;
-    head->next->prev = o;
-    head->next = o;
+    list_add(o, head, head->next);
     obj->nr_objs++;
 }
 
