@@ -1,8 +1,8 @@
 char * licenseKeyFormatting(char * S, int K){
-    char *c, *ret;
+    char *c, *ret, *ret2;
     int nr_c_in_group;
     int i, j;
-    ret = malloc(sizeof(char) * (strlen(S) * 2 + 1));
+    ret = (char *)malloc(sizeof(char) * (strlen(S) * 2 + 1));
     j = strlen(S) * 2;
     ret[j--] = '\0';
     nr_c_in_group = 0;
@@ -20,5 +20,8 @@ char * licenseKeyFormatting(char * S, int K){
         ret[j--] = S[i];
         nr_c_in_group++;
     }
-    return &ret[j + 1];
+    ret2 = (char *)malloc(sizeof(char) * (strlen(&ret[j + 1]) + 1));
+    strcpy(ret2, &ret[j + 1]);
+    free(ret);
+    return ret2;
 }
