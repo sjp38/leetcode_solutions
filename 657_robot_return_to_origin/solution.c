@@ -1,6 +1,6 @@
 bool judgeCircle(char * moves){
     int x = 0, y = 0;
-    for (; *moves != '\0'; moves++) {
+    while (*moves) {
         if (*moves == 'U')
             y += 1;
         else if (*moves == 'D')
@@ -9,8 +9,9 @@ bool judgeCircle(char * moves){
             x -= 1;
         else
             x += 1;
+        moves++;
     }
-    if (x == 0 && y == 0)
-        return true;
-    return false;
+    if (x || y)
+        return false;
+    return true;
 }
