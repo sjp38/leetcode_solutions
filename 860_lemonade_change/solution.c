@@ -1,5 +1,5 @@
 bool lemonadeChange(int* bills, int billsSize){
-    int nr_changes[3] = {0,};    /* number of 5, 10, 20 dollars */
+    int nr_changes[2] = {0,};    /* number of 5, 10 dollars */
     int i;
     for (i = 0; i < billsSize; i++) {
         if (bills[i] == 5) {
@@ -9,8 +9,7 @@ bool lemonadeChange(int* bills, int billsSize){
             if (nr_changes[0] == 0)
                 return false;
             nr_changes[0]--;
-        } else if (bills[i] == 20) {
-            nr_changes[2]++;
+        } else { /* 20 dollars */
             if (nr_changes[0] > 0 && nr_changes[1] > 0) {
                 nr_changes[0]--;
                 nr_changes[1]--;
