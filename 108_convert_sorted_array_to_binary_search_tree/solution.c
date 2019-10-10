@@ -7,9 +7,9 @@
  * };
  */
 
-struct TreeNode *newnode(int val)
+static inline struct TreeNode *newnode(int val)
 {
-    struct TreeNode *newnode;
+    static struct TreeNode *newnode;
     newnode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
     newnode->left = NULL;
     newnode->right = NULL;
@@ -17,7 +17,7 @@ struct TreeNode *newnode(int val)
     return newnode;
 }
 
-struct TreeNode *tree_insert(struct TreeNode *root, int val)
+static struct TreeNode *tree_insert(struct TreeNode *root, int val)
 {
     struct TreeNode **pp, *node;
     if (root == NULL)
@@ -35,7 +35,7 @@ struct TreeNode *tree_insert(struct TreeNode *root, int val)
     return root;
 }
 
-struct TreeNode *insert(struct TreeNode *root, int *nums, int nr_nums)
+static struct TreeNode *insert(struct TreeNode *root, int *nums, int nr_nums)
 {
     int mid = nr_nums / 2;
     if (nr_nums <= 0)
