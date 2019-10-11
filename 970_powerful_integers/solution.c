@@ -1,27 +1,24 @@
-int len = 0, cap = 64;
+int len, cap;
 int *buf;
 
-void append(int v) {
-    int i;
-    if (len + 1 >= cap) {
+static void append(int v) {
+    if (len == cap) {
         cap *= 2;
         realloc(buf, sizeof(char) * cap);
     }
     buf[len++] = v;
 }
 
-int logof(int v, int base) {
+static int logof(int v, int base) {
     int ret = 0;
     if (base == 1)
         return 1;
-    while (v) {
-        ret++;
-        v /= base;
-    }
+    for (ret = 0; v; v /= base, ret++)
+        ;
     return ret;
 }
 
-int cmp(void *l, void *r)
+static int cmp(void *l, void *r)
 {
     return *(int *)l - *(int *)r;
 }
@@ -34,11 +31,10 @@ int* powerfulIntegers(int x, int y, int bound, int* returnSize) {
     int xbound, ybound, xv, yv, v;
     int *ret;
     int i, j;
-    if (buf != NULL) {
+    if (buf != NULL)
         free(buf);
-        len = 0;
-        cap = 64;
-    }
+    len = 0;
+    cap = 64;
     buf = (int *)malloc(sizeof(int) * cap);
     xbound = logof(bound, x);
     ybound = logof(bound, y);
@@ -46,7 +42,6 @@ int* powerfulIntegers(int x, int y, int bound, int* returnSize) {
     for (i = 0, xv = 1; i < xbound; i++) {
         for (j = 0, yv = 1; j < ybound; j++) {
             v = xv + yv;
-            //printf("2**%d + 3**%d: %d\n", i, j, v);
             if (v <= bound)
                 append(v);
             yv *= y;
