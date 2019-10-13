@@ -7,9 +7,7 @@ int* twoSum(int* numbers, int numbersSize, int target, int* returnSize){
     ret = (int *)malloc(sizeof(int) * 2);
     *returnSize = 2;
     for (i = 0; i < numbersSize - 1; i++) {
-        for (j = 1; j < numbersSize; j++) {
-            if (i == j)
-                continue;
+        for (j = i + 1; j < numbersSize; j++) {
             if (numbers[i] + numbers[j] == target) {
                 numbers[0] = i + 1;
                 numbers[1] = j + 1;
