@@ -11,14 +11,12 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
     struct ListNode *node, *prev;
     struct ListNode **n_nodes;
     int h = 0, tail = 0;
-    n_nodes = (struct ListNode **)malloc(sizeof(struct ListNode *) * (n + 1));
+    n_nodes = (struct ListNode **)calloc(n + 1, sizeof(struct ListNode *));
     
-    for (node = head; node != NULL; node = node->next) {
+    for (node = head; node != NULL; node = node->next)
         n_nodes[tail++ % (n + 1)] = node;
-        if (tail > n + 1)
-            h = (h + 1) % (n + 1);
-    }
-    if (h == 0 && tail == n)
+    h = tail % (n + 1);
+    if (n_nodes[h] == NULL)
         return head->next;
     prev = n_nodes[h];
     prev->next = prev->next->next;
