@@ -30,7 +30,7 @@ int word_cmp(char *l, char *r)
         if (*cl != *cr && *cr != '.')
             return 1;
     }
-    if (*cl == '\0' && *cr == '\0')
+    if (*cl == *cr)
         return 0;
     return 1;
 }
