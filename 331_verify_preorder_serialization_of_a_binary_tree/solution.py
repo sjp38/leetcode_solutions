@@ -1,18 +1,18 @@
-def is_valid(nodes, idx):
-    # returns validity of the node and the idx of the sibling node.
+def sibling(nodes, idx):
+    # returns the idx of the sibling node, -1 if it the node is invalid.
     if len(nodes) <= idx:
-        return False, -1
+        return -1
     if nodes[idx] == '#':
-        return True, idx + 1
-    
-    lidx = idx + 1
-    valid, ridx = is_valid(nodes, lidx)
-    if not valid:
-        return False, -1
-    valid, nidx = is_valid(nodes, ridx)
-    if not valid:
-        return False, -1
-    return True, nidx
+        return idx + 1
+    # left child
+    ridx = sibling(nodes, idx + 1)
+    if ridx == -1:
+        return -1
+    # right child
+    nidx = sibling(nodes, ridx)
+    if nidx == -1:
+        return -1
+    return nidx
 
 class Solution(object):
     def isValidSerialization(self, preorder):
@@ -21,7 +21,7 @@ class Solution(object):
         :rtype: bool
         """
         nodes = preorder.split(',')
-        valid, nr_nodes = is_valid(nodes, 0)
+        nr_nodes = sibling(nodes, 0)
         if nr_nodes == len(nodes):
             return True
         return False
