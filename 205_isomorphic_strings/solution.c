@@ -1,12 +1,12 @@
 bool isIsomorphic(char * s, char * t){
     char map[256] = {0,}; /* maps s to t */
-    char rmap[256] = {0,};
+    bool rmap[256] = {false,};
     for (;*s != '\0'; s++, t++) {
         if (map[*s] == '\0') {
-            if (rmap[*t] != '\0')
+            if (rmap[*t])
                 return false;
             map[*s] = *t;
-            rmap[*t] = *s;
+            rmap[*t] = true;
             continue;
         }
         if (map[*s] != *t)
