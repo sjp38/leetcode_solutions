@@ -17,23 +17,20 @@ RLEIterator* rLEIteratorCreate(int* A, int ASize) {
 int rLEIteratorNext(RLEIterator* obj, int n) {
     int i;
     int remaining_nrs;
-    int ret;
     while (n && obj->sz_arr) {
         remaining_nrs = obj->cur[0] - obj->offset;
         if (remaining_nrs > n) {
             obj->offset += n;
             return obj->cur[1];
-        } else if (remaining_nrs == n) {
-            ret = obj->cur[1];
-            obj->cur += 2;
-            obj->sz_arr -= 2;
-            obj->offset = 0;
-            return ret;
         } else {
             obj->cur += 2;
             obj->sz_arr -= 2;
             obj->offset = 0;
-            n -= remaining_nrs;
+            if (n > remaining_nrs) {
+                n -= remaining_nrs;
+                continue;
+            }
+            return obj->cur[-1];
         }
     }
     return -1;
