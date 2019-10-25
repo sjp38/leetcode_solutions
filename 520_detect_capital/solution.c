@@ -10,9 +10,7 @@ bool detectCapitalUse(char * word){
         len++;
     }
     if (is_uppercase(*word)) {
-        if (len == nr_uppercases)
-            return true;
-        if (nr_uppercases == 0)
+        if (len == nr_uppercases || nr_uppercases == 0)
             return true;
     } else if (nr_uppercases == 0)
         return true;
