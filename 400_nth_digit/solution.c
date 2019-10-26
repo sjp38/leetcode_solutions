@@ -25,7 +25,7 @@ the number increments one as n increases three, until 100-990,
 
 */
 
-int digitof(int nr, int offset)
+static int digitof(int nr, int offset)
 {
     int i;
     int base = 1;
@@ -35,23 +35,20 @@ int digitof(int nr, int offset)
 }
 
 int findNthDigit(int n){
-    long prev_max_n = -1;
+    long n_start = 0;
     unsigned long max_n = 9;
-    long prev_max_nr = -1;
+    long nr_start = 0;
     unsigned long max_nr = 9;
     int digits = 1;
     while (max_n < n) {
-        prev_max_nr = max_nr;
+        nr_start = max_nr + 1;
         max_nr = (max_nr + 1) * 10 - 1;
         digits++;
-        prev_max_n = max_n;
-        max_n += (max_nr - prev_max_nr) * digits;
-        //printf("%u %u\n", prev_max_nr, max_nr);
+        n_start = max_n + 1;
+        max_n += (max_nr - nr_start + 1) * digits;
     }
     int nr, offset;
-    nr = prev_max_nr + 1 + (n - prev_max_n - 1) / digits;
-    //printf("prev_max_n: %d, max_n: %u, prev_max_nr: %d, max_nr: %lu, digits: %d, nr: %d\n", prev_max_n, max_n, prev_max_nr, max_nr, digits, nr);
-    offset = (n - prev_max_n - 1) % digits;
-    offset = digits - offset - 1;
+    nr = nr_start + (n - n_start) / digits;
+    offset = digits - (n - n_start) % digits - 1;
     return digitof(nr, offset);
 }
