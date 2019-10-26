@@ -8,20 +8,6 @@
 12 -> 1
 13 -> 1
 ...
-10 + n * 2 + 1 -> n
-
-suppose reversely.
-We try to know what number the n'th digits below.
-the number increments one as n increases one, until 0-9
-(0-9 -> 0-9)
-the number increments one as n increases two, until 10-99
-(10-99 -> 10-(10 + (99 - 10) * 2 + 1))
-n = 10 + (x - 10) * 2
-(x - 10) * 2 = n - 10
-x - 10 = (n - 10) / 2
-x = (n - 10) /2 + 10
-the number increments one as n increases three, until 100-990,
-...
 
 */
 
