@@ -9,8 +9,6 @@
 
 struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2){
     struct ListNode *ret = NULL, *ir = NULL, **small;
-    if (!l1 && !l2)
-        return NULL;
     for (ir = ret; l1 && l2;) {
         if (l1->val < l2->val)
             small = &l1;
