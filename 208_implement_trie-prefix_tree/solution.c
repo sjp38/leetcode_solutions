@@ -3,7 +3,7 @@ typedef struct Trie {
     bool is_end;
 } Trie;
 
-#define idxof(c) (c - 'a')
+#define childof(node, c) (node->childs[c - 'a'])
 
 /** Initialize your data structure here. */
 
@@ -17,11 +17,11 @@ Trie* trieCreate() {
 void trieInsert(Trie* obj, char * word) {
     Trie *node;
     for (; *word; word++) {
-        if (obj->childs[*word - 'a'] == NULL) {
+        if (!childof(obj, *word)) {
             node = (Trie *)calloc(1, sizeof(Trie));
-            obj->childs[*word - 'a'] = node;
+            childof(obj, *word) = node;
         }
-        obj = obj->childs[*word - 'a'];
+        obj = childof(obj, *word);
     }
     obj->is_end = true;
 }
@@ -29,9 +29,9 @@ void trieInsert(Trie* obj, char * word) {
 /** Returns if the word is in the trie. */
 bool trieSearch(Trie* obj, char * word) {
     for (; *word; word++) {
-        if (obj->childs[idxof(*word)] == NULL)
+        if (!childof(obj, *word))
             return false;
-        obj = obj->childs[idxof(*word)];
+        obj = childof(obj, *word);
     }
     if (!obj->is_end)
         return false;
@@ -41,9 +41,9 @@ bool trieSearch(Trie* obj, char * word) {
 /** Returns if there is any word in the trie that starts with the given prefix. */
 bool trieStartsWith(Trie* obj, char * prefix) {
     for (; *prefix; prefix++) {
-        if (obj->childs[idxof(*prefix)] == NULL)
+        if (!childof(obj, *prefix))
             return false;
-        obj = obj->childs[idxof(*prefix)];
+        obj = childof(obj, *prefix);
     }
     return true;
 }
