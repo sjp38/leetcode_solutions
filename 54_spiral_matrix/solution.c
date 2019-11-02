@@ -78,11 +78,7 @@ int* spiralOrder(int** lmatrix, int matrixSize, int* matrixColSize, int* returnS
         return NULL;
     }
     *returnSize = matrixSize * matrixColSize[0];
-    if (ret)
-        free(ret);
     ret = (int *)malloc(sizeof(int) * *returnSize);
-    if (visited)
-        free(visited);
     visited = (bool *)calloc(*returnSize, sizeof(bool));
     matrix = lmatrix;
     nr_rows = matrixSize;
@@ -91,5 +87,6 @@ int* spiralOrder(int** lmatrix, int matrixSize, int* matrixColSize, int* returnS
     direction = right;
     while (set_val())
         ;
+    free(visited);
     return ret;
 }
