@@ -7,20 +7,18 @@
  * };
  */
 
-int sum;
-
-void trav(struct TreeNode *node, bool is_left)
+void trav(struct TreeNode *node, bool is_left, int *sum)
 {
     if (!node)
         return;
+    trav(node->left, true, sum);
+    trav(node->right, false, sum);
     if (is_left && !node->left && !node->right)
-        sum += node->val;
-    trav(node->left, true);
-    trav(node->right, false);
+        *sum += node->val;
 }
 
 int sumOfLeftLeaves(struct TreeNode* root) {
-    sum = 0;
-    trav(root, false);
+    int sum = 0;
+    trav(root, false, &sum);
     return sum;
 }
