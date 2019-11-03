@@ -3,9 +3,8 @@ bool searchMatrix(int** matrix, int matrixSize, int* matrixColSize, int target){
     int row, col;
     if (matrixSize == 0 || matrixColSize[0] == 0)
         return false;
-    left = 0;
-    right = matrixSize * matrixColSize[0] - 1;
-    while (left <= right) {
+    for (left = 0, right = matrixSize * matrixColSize[0] - 1;
+         left <= right;) {
         mid = (left + right) / 2;
         row = mid / matrixColSize[0];
         col = mid % matrixColSize[0];
