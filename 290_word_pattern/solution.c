@@ -12,8 +12,7 @@ bool wordPattern(char * pattern, char * str){
             *c = '\0';
         if (map[*pattern - 'a'] == NULL) {
             for (i = 0; i < 26; i++) {
-                if (map[i] != NULL &&
-                    !strcmp(map[i], str))
+                if (map[i] && !strcmp(map[i], str))
                     return false;
             }
             map[*pattern - 'a'] = str;
