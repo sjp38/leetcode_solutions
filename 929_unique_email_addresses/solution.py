@@ -4,7 +4,7 @@ class Solution(object):
         :type emails: List[str]
         :rtype: int
         """
-        addrs = []
+        addrs = {}
         for email in emails:
             fields = email.split('@')
             # only one @ is guaranteed
@@ -17,7 +17,7 @@ class Solution(object):
                 if c == '+':
                     break
                 finalname += c
-            finaladdr = finalname + '@' + domainname
+            finaladdr = "%s@%s" % (finalname, domainname)
             if not finaladdr in addrs:
-                addrs.append(finaladdr)
+                addrs[finaladdr] = True
         return len(addrs)
