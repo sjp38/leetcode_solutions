@@ -9,22 +9,19 @@
 
 
 struct TreeNode* insertIntoBST(struct TreeNode* root, int val){
-    struct TreeNode *node, *parent;
-    node = root, parent = NULL;
+    struct TreeNode *node, **link;
+    node = root;
     while (node) {
-        parent = node;
         if (node->val > val)
-            node = node->left;
+            link = &node->left;
         else if (node->val < val)
-            node = node->right;
+            link = &node->right;
+        node = *link;
     }
     node = (struct TreeNode *)malloc(sizeof(struct TreeNode));
     node->val = val;
     node->left = NULL;
     node->right = NULL;
-    if (parent->val < val)
-        parent->right = node;
-    else
-        parent->left = node;
+    *link = node;
     return root;
 }
