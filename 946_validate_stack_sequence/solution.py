@@ -7,9 +7,7 @@ class Solution(object):
         """
         now_stack = []
         for v in popped:
-            while not v in now_stack:
-                if len(pushed) == 0:
-                    return False
+            while len(pushed) > 0 and not v in now_stack:
                 now_stack.append(pushed[0])
                 pushed = pushed[1:]
             if not v == now_stack[-1]:
