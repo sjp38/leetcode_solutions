@@ -7,6 +7,7 @@ int* nextGreaterElements(int* nums, int numsSize, int* returnSize){
     ret = (int *)malloc(sizeof(int) * numsSize);
     *returnSize = numsSize;
     for (i = 0; i < numsSize; i++) {
+        ret[i] = -1;
         for (j = i + 1; j != i; j++) {
             if (j == numsSize) {
                 j = -1;
@@ -17,8 +18,6 @@ int* nextGreaterElements(int* nums, int numsSize, int* returnSize){
                 break;
             }
         }
-        if (i == j)
-            ret[i] = -1;
     }
     return ret;
 }
