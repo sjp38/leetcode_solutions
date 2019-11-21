@@ -1,8 +1,8 @@
 bool isPowerOfFour(int num){
     while (num > 1) {
-        if (num % 4)
+        if (num & 3)
             return false;
-        num /= 4;
+        num = num >> 2;
     }
     return num == 1;
 }
