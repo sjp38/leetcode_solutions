@@ -9,11 +9,12 @@ class Solution(object):
         for nr in nums:
             idx = sorted_ranks.index(nr) + 1
             if idx > 3:
-                ret.append("%s" % idx)
+                rank = "%s" % idx
             elif idx == 1:
-                ret.append("Gold Medal")
+                rank = "Gold Medal"
             elif idx == 2:
-                ret.append("Silver Medal")
+                rank = "Silver Medal"
             else:
-                ret.append("Bronze Medal")
+                rank = "Bronze Medal"
+            ret.append(rank)
         return ret
