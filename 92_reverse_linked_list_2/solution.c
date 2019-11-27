@@ -30,7 +30,6 @@ struct ListNode* reverseBetween(struct ListNode* head, int m, int n){
                 (*startlink)->next = node->next;
                 node->next = prevprev;
                 *startlink = node;
-                break;
             }
             continue;
         }
@@ -39,7 +38,6 @@ struct ListNode* reverseBetween(struct ListNode* head, int m, int n){
             (*startlink)->next = node->next;
             node->next = prev;
             *startlink = node;
-            break;
         }
         prevprev = prev;
         prev = node;
