@@ -24,23 +24,18 @@ struct ListNode* reverseBetween(struct ListNode* head, int m, int n){
             prevprev = node;
             continue;
         }
-        if (idx == m + 1) {
+        if (idx == m + 1)
             prev = node;
-            if (idx == n) {
-                (*startlink)->next = node->next;
-                node->next = prevprev;
-                *startlink = node;
-            }
-            continue;
+        if (idx > m + 1) {
+            prev->next = prevprev;
+            prevprev = prev;
+            prev = node;
         }
-        prev->next = prevprev;
         if (idx == n) {
             (*startlink)->next = node->next;
-            node->next = prev;
+            node->next = prevprev;
             *startlink = node;
         }
-        prevprev = prev;
-        prev = node;
     }
     if (m == 1)
         return *startlink;
