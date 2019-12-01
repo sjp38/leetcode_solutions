@@ -4,8 +4,7 @@ bool is_magic(int **grid, int row, int col)
     int sum, last_sum;
     int i, j;
     for (i = row; i < row + 3; i++) {
-        sum = 0;
-        for (j = col; j < col + 3; j++) {
+        for (j = col, sum = 0; j < col + 3; j++) {
             if (grid[i][j] < 1 || grid[i][j] > 9)
                 return false;
             if (nums[grid[i][j] - 1])
@@ -15,27 +14,20 @@ bool is_magic(int **grid, int row, int col)
         }
         if (i == row)
             last_sum = sum;
-        if (sum != last_sum)
-            return false;
+        if (sum != last_sum) return false;
     }
     for (j = col; j < col + 3; j++) {
-        sum = 0;
-        for (i = row; i < row + 3; i++) {
+        for (i = row, sum = 0; i < row + 3; i++) {
             sum += grid[i][j];
         }
-        if (sum != last_sum)
-            return false;
+        if (sum != last_sum) return false;
     }
-    sum = 0;
-    for (i = 0; i < 3; i++)
+    for (i = 0, sum = 0; i < 3; i++)
         sum += grid[row + i][col + i];
-    if (sum != last_sum)
-        return false;
-    sum = 0;
-    for (i = 0; i < 3; i++)
+    if (sum != last_sum) return false;
+    for (i = 0, sum = 0; i < 3; i++)
         sum += grid[row - i + 2][col + i];
-    if (sum != last_sum)
-        return false;
+    if (sum != last_sum) return false;
     return true;
 }
 
