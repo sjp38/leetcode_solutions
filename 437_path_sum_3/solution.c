@@ -41,7 +41,10 @@ void trav(struct TreeNode *node, int target, int parent_sum)
             answer++;
     }
     
-    add_parent(node);
+    if (add_parent(node)) {
+        printf("failed to add parent!\n");
+        exit(-1);
+    }
     trav(node->left, target, parent_sum + node->val);
     trav(node->right, target, parent_sum + node->val);
     
