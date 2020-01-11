@@ -5,6 +5,8 @@ struct square {
     int t;
 };
 
+#define min(l, r) (l < r ? l : r)
+
 bool intersect(struct square *a, struct square *b, struct square *ret)
 {
     struct square *l, *r;
@@ -20,9 +22,9 @@ bool intersect(struct square *a, struct square *b, struct square *ret)
     if (b->b < a->b)
         lower = b, upper = a;
     ret->l = r->l;
-    ret->r = l->r < r->r ? l->r : r->r;
+    ret->r = min(l->r, r->r);
     ret->b = upper->b;
-    ret->t = lower->t < upper->t ? lower->t : upper->t;
+    ret->t = min(lower->t, upper->t);
     return true;
 }
 
