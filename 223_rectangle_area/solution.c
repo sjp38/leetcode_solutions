@@ -10,13 +10,7 @@ bool intersect(struct square *a, struct square *b, struct square *ret)
     struct square *l, *r;
     struct square *lower, *upper;
     
-    if (a->r <= b->l)
-        return false;
-    if (b->r <= a->l)
-        return false;
-    if (a->t <= b->b)
-        return false;
-    if (b->t <= a->b)
+    if (a->r <= b->l || b->r <= a->l || a->t <= b->b || b->t <= a->b)
         return false;
     
     l = a, r = b;
