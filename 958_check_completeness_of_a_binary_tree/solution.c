@@ -32,7 +32,7 @@ void append_dyn_nodes(struct dyn_nodes *nodes, struct TreeNode *node)
 static int next_trav;
 static bool met_null;
 
-bool tree_to_nodes(struct TreeNode *node, struct dyn_nodes *arr)
+bool trav(struct TreeNode *node, struct dyn_nodes *arr)
 {
     if (!node) {
         met_null = true;
@@ -44,7 +44,7 @@ bool tree_to_nodes(struct TreeNode *node, struct dyn_nodes *arr)
     append_dyn_nodes(arr, node->left);
     append_dyn_nodes(arr, node->right);
     while (next_trav < arr->nr_nodes) {
-        if (!tree_to_nodes(arr->nodes[next_trav++], arr))
+        if (!trav(arr->nodes[next_trav++], arr))
             return false;
     }
     return true;
@@ -55,10 +55,8 @@ bool isCompleteTree(struct TreeNode* root){
     int i;
     int last_null_idx;
  
-    next_trav = 1;
+    next_trav = 0;
     met_null = false;
-    
     init_dyn_nodes(&nodes, 100);
-    append_dyn_nodes(&nodes, root);
-    return tree_to_nodes(root, &nodes);
+    return trav(root, &nodes);
 }
