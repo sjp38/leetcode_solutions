@@ -52,9 +52,7 @@ bool trav(struct TreeNode *node, struct dyn_nodes *arr)
 
 bool isCompleteTree(struct TreeNode* root){
     struct dyn_nodes nodes;
-    int i;
-    int last_null_idx;
- 
+
     next_trav = 0;
     met_null = false;
     init_dyn_nodes(&nodes, 100);
