@@ -13,7 +13,7 @@ int get_chksum(char *s, int len)
 
 bool checkInclusion(char * s1, char * s2){
     int len1, len2;
-    int sum;
+    int sum, sum2;
     int i;
     char *sorted;
     int diffs;
@@ -26,7 +26,11 @@ bool checkInclusion(char * s1, char * s2){
     qsort(s1, len1, sizeof(char), cmp_char);
     sorted = (char *)malloc(sizeof(char) * len1);
     for (i = 0; i <= len2 - len1; i++) {
-        if (get_chksum(&s2[i], len1) != sum)
+        if (i == 0)
+            sum2 = get_chksum(&s2[i], len1);
+        else
+            sum2 += s2[i + len1 - 1] - s2[i - 1];
+        if (sum2 != sum)
             continue;
         memcpy(sorted, &s2[i], sizeof(char) * len1);
         qsort(sorted, len1, sizeof(char), cmp_char);
