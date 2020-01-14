@@ -24,25 +24,21 @@ void update_time(int dst, int time)
 }
 
 int networkDelayTime(int** times, int timesSize, int* timesColSize, int N, int K){
-    struct node *node, *snode;
-    int src, dst;
-    int i, j;
+    struct node *node;
+    int i;
+    int answer = 0;
     
     for (i = 0; i < N; i++) {
+        answers[i] = -1;
         node = &nodes[i];
         node->val = i + 1;
         node->nr_neighbors = 0;
     }
     for (i = 0; i < timesSize; i++) {
-        snode = &nodes[times[i][0] - 1];
-        snode->neighbors[snode->nr_neighbors] = times[i][1];
-        snode->times[snode->nr_neighbors++] = times[i][2];
-    }
-    
-    int answer = 0;
-    
-    for (i = 0; i < N; i++)
-        answers[i] = -1;
+        node = &nodes[times[i][0] - 1];
+        node->neighbors[node->nr_neighbors] = times[i][1];
+        node->times[node->nr_neighbors++] = times[i][2];
+    }   
     
     update_time(K, 0);
     
