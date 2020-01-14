@@ -1,6 +1,6 @@
 struct node {
     int val;
-    struct node *neighbors[100];
+    int neighbors[100];
     int times[100];
     int nr_neighbors;
 };
@@ -19,12 +19,12 @@ void update_time(int dst, int time)
     answers[dst_idx] = time;
     node = &nodes[dst_idx];
     for (i = 0; i < node->nr_neighbors; i++) {
-        update_time(node->neighbors[i]->val, time + node->times[i]);
+        update_time(node->neighbors[i], time + node->times[i]);
     }
 }
 
 int networkDelayTime(int** times, int timesSize, int* timesColSize, int N, int K){
-    struct node *node, *snode, *dnode;
+    struct node *node, *snode;
     int src, dst;
     int i, j;
     
@@ -35,8 +35,7 @@ int networkDelayTime(int** times, int timesSize, int* timesColSize, int N, int K
     }
     for (i = 0; i < timesSize; i++) {
         snode = &nodes[times[i][0] - 1];
-        dnode = &nodes[times[i][1] - 1];
-        snode->neighbors[snode->nr_neighbors] = dnode;
+        snode->neighbors[snode->nr_neighbors] = times[i][1];
         snode->times[snode->nr_neighbors++] = times[i][2];
     }
     
