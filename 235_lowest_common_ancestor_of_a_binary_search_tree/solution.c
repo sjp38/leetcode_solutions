@@ -10,7 +10,6 @@
 struct TreeNode *do_search(struct TreeNode *node, struct TreeNode *p, struct TreeNode *q)
 {
     int l, r;
-    struct TreeNode *answer;
     
     l = p->val < q->val ? p->val : q->val;
     r = p->val > q->val ? p->val : q->val;
