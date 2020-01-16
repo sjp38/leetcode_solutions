@@ -40,7 +40,7 @@ struct TreeNode* increasingBST(struct TreeNode* root){
     int i;
     if (!root)
         return NULL;
-    darr_init(100);
+    darr_init(10);
     trav(root);
     for (i = 1; i < nr_nodes; i++) {
         darr[i - 1]->left = NULL;
