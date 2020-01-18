@@ -15,14 +15,15 @@ class Solution(object):
         if not head:
             return None
         copies = {}
+        copies[None] = None
         orig_head = head
         while head:
             copy = Node(head.val, head.next, head.random)
             copies[head] = copy
             head = head.next
         for copy in copies.values():
-            if copy.next:
-                copy.next = copies[copy.next]
-            if copy.random:
-                copy.random = copies[copy.random]
+            if not copy:
+                continue
+            copy.next = copies[copy.next]
+            copy.random = copies[copy.random]
         return copies[orig_head]
