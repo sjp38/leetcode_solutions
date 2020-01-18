@@ -12,8 +12,6 @@ class Solution(object):
         :type head: Node
         :rtype: Node
         """
-        if not head:
-            return None
         copies = {}
         copies[None] = None
         orig_head = head
