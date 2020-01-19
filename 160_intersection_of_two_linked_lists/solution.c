@@ -15,19 +15,21 @@ struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *he
             return NULL;
         if (a == b)
             return a;
-        if (!a->next) {
+        if (a->next) {
+            a = a->next;
+        } else {
             a_last = a;
             a = headB;
-        } else {
-            a = a->next;
+            if (b_last && a_last != b_last)
+                return NULL;
         }
-        if (!b->next) {
+        if (b->next) {
+            b = b->next;
+        } else {
             b_last = b;
             b = headA;
-        } else {
-            b = b->next;
+            if (a_last && a_last != b_last)
+                return NULL;
         }
-        if (a_last && b_last && a_last != b_last)
-            return NULL;
     }
 }
