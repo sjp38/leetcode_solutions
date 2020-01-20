@@ -11,7 +11,6 @@ bool valid(int a, int b)
 
 int numFriendRequests(int* ages, int agesSize){
     int i, j;
-    int a, b;
     int answer = 0;
     int count[120] = {0,};
     
@@ -23,11 +22,9 @@ int numFriendRequests(int* ages, int agesSize){
             if (valid(i + 1, j + 1)) {
                 if (!count[i] || !count[j])
                     continue;
-                a = count[i];
-                b = count[j];
+                answer += count[i] * count[j];
                 if (i == j)
-                    b--;
-                answer += a * b;
+                    answer -= count[i];
             }
         }
     }
