@@ -51,7 +51,7 @@ bool chk_valid(char c)
 bool isValid(char * s){
     if (opened)
         free(opened);
-    init_opened(10);
+    init_opened(5);
     while (*s) {
         switch (*s) {
             case '(':
