@@ -4,16 +4,18 @@ bool searchMatrix(int** matrix, int matrixRowSize, int matrixColSize, int target
         if (matrix[i][j] < target)
             break;
     }
-    if (i == matrixRowSize - 1)
+    i++, j++;
+    if (i == matrixRowSize)
         return false;
-    for (k = i + 1; k < matrixRowSize; k++) {
-        for (l = 0; l <= j + 1; l++) {
+    
+    for (k = i; k < matrixRowSize; k++) {
+        for (l = 0; l <= j; l++) {
             if (matrix[k][l] == target)
                 return true;
         }
     }
-    for (k = 0; k <= i + 1; k++) {
-        for (l = j + 1; l < matrixColSize; l++) {
+    for (k = 0; k <= i; k++) {
+        for (l = j; l < matrixColSize; l++) {
             if (matrix[k][l] == target)
                 return true;
         }
