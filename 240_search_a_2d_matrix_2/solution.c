@@ -6,7 +6,7 @@ bool do_search_matrix(int** matrix, int row_start, int row_end, int col_start, i
             break;
     }
     i++, j++;
-    if (i == row_end)
+    if (i == row_end || j == col_end)
         return false;
     
     if (i == row_end - 1) {
