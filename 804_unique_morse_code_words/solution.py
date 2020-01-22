@@ -7,8 +7,8 @@ class Solution(object):
         """
         concats = {}
         for w in words:
-            concat = ''
+            codes = []
             for c in w:
-                concat += morse_codes[ord(c) - ord('a')]
-            concats[concat] = True
+                codes.append(morse_codes[ord(c) - ord('a')])
+            concats[''.join(codes)] = True
         return len(concats)
