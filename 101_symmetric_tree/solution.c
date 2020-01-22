@@ -23,5 +23,7 @@ bool is_symmetric(struct TreeNode *l, struct TreeNode *r)
 }
 
 bool isSymmetric(struct TreeNode* root){
-    return is_symmetric(root, root);
+    if (!root)
+        return true;
+    return is_symmetric(root->left, root->right);
 }
