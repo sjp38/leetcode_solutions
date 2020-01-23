@@ -12,7 +12,6 @@ class Solution(object):
             for p in products:
                 if p.startswith(searchWord[:i + 1]):
                     suggestion.append(p)
-                    if len(suggestion) == 3:
-                        break
-            list_suggestions.append(suggestion)
+            products = suggestion
+            list_suggestions.append(suggestion[:3])
         return list_suggestions
