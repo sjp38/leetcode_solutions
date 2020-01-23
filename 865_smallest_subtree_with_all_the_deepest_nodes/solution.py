@@ -5,22 +5,17 @@
 #         self.left = None
 #         self.right = None
 
-deepest_nodes = []
 deepest_depth = 0
 
-def add_deepest_nodes(node, depth):
-    global deepest_nodes
+def set_deepest_nodes(node, depth):
     global deepest_depth
     
     if not node:
         return
-    add_deepest_nodes(node.left, depth + 1)
-    add_deepest_nodes(node.right, depth + 1)
-    if depth == deepest_depth:
-        deepest_nodes.append(node)
-    elif depth > deepest_depth:
+    set_deepest_nodes(node.left, depth + 1)
+    set_deepest_nodes(node.right, depth + 1)
+    if depth > deepest_depth:
         deepest_depth = depth
-        deepest_nodes = [node]
     
 def answer(node, depth):
     if not node:
@@ -42,9 +37,7 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
-        global deepest_nodes
         global deepest_depth
-        deepest_nodes = []
         deepest_depth = 0
-        add_deepest_nodes(root, 0)
+        set_deepest_nodes(root, 0)
         return answer(root, 0)
