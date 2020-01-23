@@ -7,31 +7,20 @@
  * };
  */
 
-int total_sum;
-
-int total_sum_of(struct TreeNode *node)
-{
-    int sum;
-    if (!node)
-        return 0;
-    sum = node->val;
-    sum += total_sum_of(node->left);
-    sum += total_sum_of(node->right);
-    return sum;
-}
+static int to_add;
 
 void convert(struct TreeNode *node)
 {
     if (!node)
         return;
-    convert(node->left);
-    total_sum -= node->val;
-    node->val = node->val + total_sum;
     convert(node->right);
+    node->val += to_add;
+    to_add = node->val;
+    convert(node->left);
 }
 
 struct TreeNode* convertBST(struct TreeNode* root){
-    total_sum = total_sum_of(root);
+    to_add = 0;
     convert(root);
     return root;
 }
