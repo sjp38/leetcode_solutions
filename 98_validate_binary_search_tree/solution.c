@@ -7,7 +7,7 @@
  * };
  */
 
-int last_val;
+struct TreeNode *last_node;
 
 bool validate(struct TreeNode *node)
 {
@@ -15,17 +15,15 @@ bool validate(struct TreeNode *node)
         return true;
     if (!validate(node->left))
         return false;
-    if (last_val == -1)
-        last_val = node->val;
-    else if (node->val <= last_val)
+    if (last_node && last_node->val >= node->val)
         return false;
-    last_val = node->val;
+    last_node = node;
     if (!validate(node->right))
         return false;
     return true;
 }
 
 bool isValidBST(struct TreeNode* root){
-    last_val = -1;
+    last_node = NULL;
     return validate(root);
 }
